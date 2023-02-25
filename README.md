@@ -6,3 +6,4 @@ Python Kafka Consumer
 2. Kafka consumer
 3. Parse JSON payload
 4. Execute command within payload
+5. Print the exit code of the command
