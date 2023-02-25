@@ -1,0 +1,14 @@
+import json
+import subprocess
+# example JSON string
+json_string = '{"job_id": 5140, "command": "echo hello2 >> c://Temp//hello.log"}'
+
+# parse the JSON string into a Python dictionary
+payload  = json.loads(json_string)
+
+# print the resulting dictionary
+job_id = payload['job_id']
+command = payload['command']
+print(command)
+result = subprocess.run(command, shell=True)
+print('Job ID: {}, Exit code of command {}: {}'.format(job_id, command, result.returncode))
