@@ -30,9 +30,10 @@ while True:
 
     try:
         payload = json.loads(msg.value())
+        job_id = payload['job_id']
         command = payload['command']
         result = subprocess.run(command, shell=True)
-        print('Exit code of command {}: {}'.format(command, result.returncode))
+        print('Job ID: {}, Exit code of command {}: {}'.format(job_id, command, result.returncode))
     except Exception as e:
         print('Error while processing message: {}'.format(str(e)))
 
