@@ -1,4 +1,4 @@
-from confluent_kafka import Consumer, KafkaError
+from confluent_kafka import Consumer, KafkaError, TopicPartition
 
 def get_consumer_group_lag(bootstrap_servers, group_id, topic):
     conf = {
@@ -10,8 +10,12 @@ def get_consumer_group_lag(bootstrap_servers, group_id, topic):
 
     consumer = Consumer(conf)
 
+    # Get the partitions for the specified topic
+    metadata = consumer.list_topics(topic)
+    partitions = metadata.topics[topic].partitions
+
     # Assign the topic and partitions to the consumer
-    consumer.assign([TopicPartition(topic, partition) for partition in consumer.partitions_for_topic(topic)])
+    consumer.assign([TopicPartition(topic, partition) for partition in partitions])
 
     # Get the current positions (offsets) for each partition
     current_offsets = consumer.committed(consumer.assignment())
